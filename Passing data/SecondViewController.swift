@@ -24,6 +24,9 @@ class SecondViewController: UIViewController {
     @IBAction func button(_ sender: UIButton) {
         delegat.passData(index: globalIndex) //Call delegate
         dismiss(animated: true, completion: nil)
+
+        
+        
     }
 }
 
