@@ -8,15 +8,11 @@
 
 import UIKit
 
-protocol passDataDelegate {
-    func passData(index: Int)
-}
 
 class ViewController: UIViewController  {
     
-    var globalIndex: Int!
+    var globalIndex: Int?
     let array = ["Row 1", "Row 2", "Row 3", "Row 4"]
-    var delegate: passDataDelegate!
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -32,7 +28,7 @@ class ViewController: UIViewController  {
     }
 }
 
-extension ViewController:  UITableViewDelegate, UITableViewDataSource, passDataDelegate {
+extension ViewController:  UITableViewDelegate, UITableViewDataSource {
     
     func passData(index: Int) {
         globalIndex = index
@@ -51,9 +47,17 @@ extension ViewController:  UITableViewDelegate, UITableViewDataSource, passDataD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You previously pressed row with index \(globalIndex)")
         let secondVC = storyboard?.instantiateViewController(withIdentifier: "secondVC") as! SecondViewController
+        secondVC.delegat = self
         secondVC.modalPresentationStyle = .fullScreen
-        delegate = secondVC
-        delegate.passData(index: indexPath.row)
+        secondVC.globalIndex = indexPath.row //Set global index
         present(secondVC, animated: true)
     }
+}
+
+extension ViewController: passDelegate{
+    func passData(index: Int?) {
+         globalIndex = index 
+    }
+    
+    
 }

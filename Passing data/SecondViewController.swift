@@ -8,27 +8,22 @@
 
 import UIKit
 
+protocol passDelegate {
+    func passData(index: Int?)
+}
+
 class SecondViewController: UIViewController {
     
     var globalIndex: Int!
+    var delegat: passDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     @IBAction func button(_ sender: UIButton) {
-        let firstVC = storyboard?.instantiateViewController(withIdentifier: "firstVC") as! ViewController
-        firstVC.modalPresentationStyle = .fullScreen
-        firstVC.delegate = firstVC
-        firstVC.delegate.passData(index: self.globalIndex)
-        
-        present(firstVC, animated: true)
-        
+        delegat.passData(index: globalIndex) //Call delegate
+        dismiss(animated: true, completion: nil)
     }
 }
 
-extension SecondViewController: passDataDelegate {
-    func passData(index: Int) {
-        globalIndex = index
-    }
-}
